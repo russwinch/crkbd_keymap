@@ -43,6 +43,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_SAT_STEP 8
 #define RGBLIGHT_VAL_STEP 8
 
-// trying to save some space
+// trying to reduce firmware size
 #define NO_ACTION_MACRO
 #define NO_ACTION_FUNCTION
+
+// adjust oled timeout
+#undef ScreenOffInterval
+#define ScreenOffInterval 6000 /* milliseconds */
