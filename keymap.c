@@ -6,6 +6,9 @@
 #endif
 #ifdef SSD1306OLED
   #include "ssd1306.h"
+    // adjust oled timeout
+  //#undef ScreenOffInterval
+  #define ScreenOffInterval 6000 /* milliseconds */
 #endif
 
 extern keymap_config_t keymap_config;
@@ -147,9 +150,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
      CTLESC, XXXXX, HYPRS, HYPRD, FORCQ, XXXXX,                  XXXXX,  SLCK,  PAUS, XXXXX, ARROW,  RCTL,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT, XXXXX, HYPRX, HYPRC, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,  RSFT,\
+       LSFT, XXXXX, HYPRX, HYPRC, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,  CAPS,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  _____, XXXXX,  LGUI,    XXXXX, RASLK, _____ \
+                                   LALT, XXXXX,  LGUI,    XXXXX, RASLK, XXXXX \
                               //`--------------------'  `--------------------'
   ),
 
@@ -159,9 +162,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
         ESC, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   LEFT,  DOWN,    UP,  RGHT, XXXXX,  RCTL,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       LSFT, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,  RSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  _____,QWERTY, _____,    _____,QWERTY, _____ \
+                                  _____,QWERTY,  LGUI,    _____,QWERTY,  FUNC \
                               //`--------------------'  `--------------------'
   )
 };

@@ -46,7 +46,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // trying to reduce firmware size
 #define NO_ACTION_MACRO
 #define NO_ACTION_FUNCTION
-
-// adjust oled timeout
-#undef ScreenOffInterval
-#define ScreenOffInterval 6000 /* milliseconds */
