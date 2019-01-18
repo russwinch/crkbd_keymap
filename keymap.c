@@ -6,9 +6,6 @@
 #endif
 #ifdef SSD1306OLED
   #include "ssd1306.h"
-    // adjust oled timeout
-  //#undef ScreenOffInterval
-  #define ScreenOffInterval 6000 /* milliseconds */
 #endif
 
 extern keymap_config_t keymap_config;
@@ -28,8 +25,8 @@ extern uint8_t is_master;
 #define _LOWER 3
 #define _RAISE 4
 #define _ADJUST 16
-#define _FUNCTION 17
-#define _ARROWS 18
+#define _FUNCTION 29
+#define _ARROWS 30
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -114,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
      CTLGRV,  MRWD,  MPLY,  MFFD,  DSKP,  DSKN,                   LEFT,  DOWN,    UP, RIGHT,  UNDS,CTLMIN,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____,  LOCK, _____, _____,MISNCT,APPWIN,                 GUILFT,GUIDWN, GUIUP,GUIRGT, _____, _____,\
+      _____,  LOCK,  SLCK,  PAUS,MISNCT,APPWIN,                 GUILFT,GUIDWN, GUIUP,GUIRGT, _____, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,      DEL, _____, _____ \
                               //`--------------------'  `--------------------'
@@ -132,27 +129,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               //`--------------------'  `--------------------'
   ),
 
-  [_ADJUST] = LAYOUT_kc( \
-  //,-----------------------------------------.                ,-----------------------------------------.
-       LPLN, XXXXX, XXXXX, XXXXX, XXXXX,  LTOG,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
-  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LMOD,  LHUI,  LSAI,  LVAI, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
-  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      LRMOD,  LHUD,  LSAD,  LVAD, XXXXX,  LRST,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,   RST,\
-  //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  XXXXX, _____, XXXXX,    XXXXX, _____, _____ \
-                              //`--------------------'  `--------------------'
-  ),
+  /* [_ADJUST] = LAYOUT_kc( \ */
+  /* //,-----------------------------------------.                ,-----------------------------------------. */
+  /*      LPLN, XXXXX, XXXXX, XXXXX, XXXXX,  LTOG,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\ */
+  /* //|------+------+------+------+------+------|                |------+------+------+------+------+------| */
+  /*      LMOD,  LHUI,  LSAI,  LVAI, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\ */
+  /* //|------+------+------+------+------+------|                |------+------+------+------+------+------| */
+  /*     LRMOD,  LHUD,  LSAD,  LVAD, XXXXX,  LRST,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,   RST,\ */
+  /* //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------| */
+  /*                                 XXXXX, _____, XXXXX,    XXXXX, _____, _____ \ */
+  /*                             //`--------------------'  `--------------------' */
+  /* ), */
 
   [_FUNCTION] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
          F1,    F2,    F3,    F4,    F5,    F6,                     F7,    F8,    F9,   F10,   F11,   F12,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-     CTLESC, XXXXX, HYPRS, HYPRD, FORCQ, XXXXX,                  XXXXX,  SLCK,  PAUS, XXXXX, ARROW,  RCTL,\
+     CTLESC, XXXXX, HYPRS, HYPRD, FORCQ,   RST,                   LMOD,  LHUI,  LSAI,  LVAI, ARROW,  RCTL,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT, XXXXX, HYPRX, HYPRC, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,  CAPS,\
+       LSFT, XXXXX, HYPRX, HYPRC, XXXXX,  LRST,                  LRMOD,  LHUD,  LSAD,  LVAD,  LPLN,  CAPS,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                   LALT, XXXXX,  LGUI,    XXXXX, RASLK, XXXXX \
+                                   LALT, XXXXX,  LGUI,     LTOG, RASLK,  FUNC \
                               //`--------------------'  `--------------------'
   ),
 
@@ -206,9 +203,9 @@ const char *read_keylog(void);
 const char *read_keylogs(void);
 
 // const char *read_mode_icon(bool swap);
-// const char *read_host_led_state(void);
-// void set_timelog(void);
-// const char *read_timelog(void);
+const char *read_host_led_state(void);
+void set_timelog(void);
+const char *read_timelog(void);
 
 void matrix_scan_user(void) {
    iota_gfx_task();
@@ -224,7 +221,10 @@ void matrix_render_user(struct CharacterMatrix *matrix) {
     //matrix_write_ln(matrix, read_host_led_state());
     //matrix_write_ln(matrix, read_timelog());
   } else {
-    matrix_write(matrix, read_logo());
+    matrix_write_ln(matrix, read_layer_state());
+    /* matrix_write_ln(matrix, read_timelog()); */
+    /* matrix_write_ln(matrix, read_host_led_state()); */
+    /* matrix_write(matrix, read_logo()); */
   }
 }
 
@@ -248,44 +248,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef SSD1306OLED
     set_keylog(keycode, record);
 #endif
-    // set_timelog();
+    /* set_timelog(); */
   }
 
   switch (keycode) {
-    case QWERTY:
-      if (record->event.pressed) {
-        persistent_default_layer_set(1UL<<_QWERTY);
-      }
-      return false;
-      break;
-    case LOWER:
-      if (record->event.pressed) {
-        layer_on(_LOWER);
-        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_LOWER);
-        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-      break;
-    case RAISE:
-      if (record->event.pressed) {
-        layer_on(_RAISE);
-        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_RAISE);
-        update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-      break;
-    case ADJUST:
-        if (record->event.pressed) {
-          layer_on(_ADJUST);
-        } else {
-          layer_off(_ADJUST);
-        }
-        return false;
-        break;
+    /* case QWERTY: */
+    /*   if (record->event.pressed) { */
+    /*     persistent_default_layer_set(1UL<<_QWERTY); */
+    /*   } */
+    /*   return false; */
+    /*   break; */
+    /* case LOWER: */
+    /*   if (record->event.pressed) { */
+    /*     layer_on(_LOWER); */
+    /*     update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST); */
+    /*   } else { */
+    /*     layer_off(_LOWER); */
+    /*     update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST); */
+    /*   } */
+    /*   return false; */
+    /*   break; */
+    /* case RAISE: */
+    /*   if (record->event.pressed) { */
+    /*     layer_on(_RAISE); */
+    /*     update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST); */
+    /*   } else { */
+    /*     layer_off(_RAISE); */
+    /*     update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST); */
+    /*   } */
+    /*   return false; */
+    /*   break; */
+    /* case ADJUST: */
+    /*     if (record->event.pressed) { */
+    /*       layer_on(_ADJUST); */
+    /*     } else { */
+    /*       layer_off(_ADJUST); */
+    /*     } */
+    /*     return false; */
+    /*     break; */
     case RGB_MOD:
       #ifdef RGBLIGHT_ENABLE
         if (record->event.pressed) {
