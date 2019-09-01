@@ -32,8 +32,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define USE_SERIAL_PD2
 
-#define TAPPING_FORCE_HOLD
-/* #define TAPPING_TERM 100 */
+/* #define TAPPING_FORCE_HOLD */
+#define TAPPING_TERM 200
 
 #undef RGBLED_NUM
 /* #define RGBLIGHT_ANIMATIONS */
@@ -45,9 +45,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
 #define RGBLED_NUM 21
 #define RGBLIGHT_LIMIT_VAL 120
-#define RGBLIGHT_HUE_STEP 4
-#define RGBLIGHT_SAT_STEP 8
-#define RGBLIGHT_VAL_STEP 8
+#define RGBLIGHT_HUE_STEP 8
+#define RGBLIGHT_SAT_STEP 16
+#define RGBLIGHT_VAL_STEP 16
 
 // trying to reduce firmware size
 #define NO_ACTION_MACRO
